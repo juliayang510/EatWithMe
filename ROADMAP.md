@@ -4,7 +4,7 @@
 
 **Scope for this prototype:** one primary user journey — build a profile → pick a mode → get matched → see a recommended restaurant on a map → message the match → rate the meal afterward. Auth, matching, and payments are simulated with mock logic and seed data so the flow is demoable without live infrastructure (see assumptions below).
 
-**Stack assumption:** React + Vite + TypeScript, React Router, a lightweight state layer (React context or Zustand), Leaflet/Mapbox (or Google Maps if a key is available) for the map, and a mock data/API layer (local JSON + in-memory "server" via MSW or a tiny Express/JSON-server) so it can be swapped for a real backend later without rewriting UI.
+**Stack (confirmed):** React + Vite + TypeScript, React Router, Zustand for state, Tailwind CSS for the design tokens, Leaflet + OpenStreetMap for the map (free, no API key), local JSON seed data for users/restaurants/matches, and a small local Socket.io + Express server for **real-time chat** (in-memory message store — no external service or account needed). Everything except chat is mock/local state; chat is genuinely live so two open browser tabs/users see messages instantly. Happy Hour and restaurant partnerships remain out of scope.
 
 ---
 
@@ -31,10 +31,10 @@
 
 ---
 
-## Open questions / assumptions to confirm
+## Decisions
 
-- **Backend:** Is a mock/seed-data frontend-only prototype acceptable for this milestone, or do you need a real backend (auth, persistence, live matching) even at prototype stage?
-- **Map provider:** Design doc references Google Maps API — do you have a key available, or should the prototype use a free alternative (Leaflet + OpenStreetMap) to avoid billing setup?
-- **Real-time chat:** Is mock/local-state messaging sufficient, or do you want live sync (e.g., Firebase/websockets) even in the prototype?
-- **"Launch by week 9" timeline** mentioned in the brainstorm — is that still the deadline driving how much of steps 11–18 should be simplified further?
-- **Happy Hour & restaurant partnerships** — confirmed out of scope for this prototype (deferred), correct?
+- **Backend:** Mock/seed data for everything except chat.
+- **Map provider:** Leaflet + OpenStreetMap (free, no API key).
+- **Chat:** Real-time via a local Socket.io + Express server.
+- **Timeline:** No fixed deadline driving scope.
+- **Happy Hour & restaurant partnerships:** Out of scope for this prototype.
