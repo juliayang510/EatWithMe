@@ -162,9 +162,19 @@ export function ProfileSetupPage() {
           />
         </label>
 
-        <Button type="submit" disabled={!canSubmit} className="w-full">
+        <Button
+          type="submit"
+          disabled={!canSubmit}
+          aria-describedby={!canSubmit ? 'continue-help' : undefined}
+          className="w-full"
+        >
           Continue
         </Button>
+        {!canSubmit && (
+          <p id="continue-help" className="-mt-4 text-sm text-gray-70">
+            Add your name and pick at least one cuisine and one budget to continue.
+          </p>
+        )}
       </form>
     </OnboardingLayout>
   )

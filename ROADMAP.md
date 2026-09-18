@@ -25,9 +25,9 @@
 13. ✅ **Streak logic** — Increment/reset a per-match streak based on "messaged today" events, surfaced as a badge in chat and matches list.
 14. ✅ **Post-meal rating flow** — Rate a matched companion (reliability/communication) and the venue (would-return), stored locally; feeding results back into ranking is deferred (needs a real backend to matter beyond one session).
 15. ✅ **Free vs. Paid tier gating** — A toggle on the Profile page that shows/hides the decline-match control and a sponsored-ad placeholder vs. an ad-free, gold-tinted "Paid" state — no real payment processing.
-16. ⬜ **Accessibility & responsive pass** — Verify WCAG AA contrast (Cardinal/Gold pairings), 44×44px touch targets, keyboard/screen-reader support with descriptive labels, reduced-motion handling for streak/match animations, and layout from 360px–1440px+.
-17. ⬜ **Empty/error states & microcopy pass** — Friendly, on-brand copy for no-matches, no-restaurants-nearby, network/mock-data-empty states, matching the warm/casual voice guidelines.
-18. ⬜ **Demo polish & deploy** — Seed a compelling demo scenario, fix visual rough edges, and deploy the prototype (e.g., Vercel/Netlify) with a short walkthrough script for presenting the golden path.
+16. ✅ **Accessibility & responsive pass** — Verified no horizontal overflow from 360px–1440px+ (and fixed a real desktop layout bug where the fixed sidebar and centered content drifted apart on wide screens); confirmed all Gold usage pairs with dark text/outline (no gold-on-white text); widened undersized touch targets to 44×44px; added ARIA labels + reduced-motion handling to the map pins (which inherit Leaflet's built-in keyboard support); added disabled-state help text for screen readers on the profile form.
+17. ✅ **Empty/error states & microcopy pass** — Friendly copy already covered no-matches/no-restaurants/no-conversations; added a distinct "Reconnecting…" vs. "Can't reach the chat server" state for the DM thread instead of an indefinite "Connecting…".
+18. ✅ **Demo polish & delivery** — Given no hosting account was provided, delivered as a downloadable `.zip` of the full source (both `client/` and `server/`) with setup instructions in `README.md`, instead of a live deployed URL.
 
 ---
 

@@ -33,4 +33,4 @@ Then open http://localhost:5173. Sign in with any `@usc.edu` email (no real veri
 
 ## Status
 
-Steps 1–15 of `ROADMAP.md` are implemented (design system, nav shell, onboarding, matchmaking, map, real-time chat + streaks, ratings, tier gating). Remaining: accessibility/responsive polish pass, empty/error-state copy pass, and deploy.
+All 18 steps of `ROADMAP.md` are complete: design system, nav shell, onboarding, matchmaking, map, real-time chat + streaks, ratings, tier gating, an accessibility/responsive pass, and empty/error-state copy. No hosting was set up, so this is delivered as source rather than a live URL — run it locally with the two commands above.

@@ -19,7 +19,7 @@ function ChatThread({ roomId }: { roomId: string }) {
   const profile = useAppStore((s) => s.profile)
   const recordMessageSent = useAppStore((s) => s.recordMessageSent)
   const streak = useAppStore((s) => s.streaks[roomId])
-  const { messages, connected, sendMessage } = useChatRoom(roomId)
+  const { messages, status, sendMessage } = useChatRoom(roomId)
   const [draft, setDraft] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
 
@@ -57,7 +57,17 @@ function ChatThread({ roomId }: { roomId: string }) {
         </span>
         <div className="flex flex-col">
           <span className="text-base font-semibold">{other?.name ?? 'Unknown match'}</span>
-          {!connected && <span className="text-xs text-gray-70">Connecting…</span>}
+          {status === 'connecting' && (
+            <span className="text-xs text-gray-70">Connecting…</span>
+          )}
+          {status === 'reconnecting' && (
+            <span className="text-xs text-cardinal">Reconnecting…</span>
+          )}
+          {status === 'error' && (
+            <span className="text-xs text-cardinal">
+              Can&apos;t reach the chat server — is it running?
+            </span>
+          )}
         </div>
         {streak && streak.count > 0 && (
           <Badge tone="gold" className="ml-auto">

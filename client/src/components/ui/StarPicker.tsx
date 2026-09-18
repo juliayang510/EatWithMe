@@ -25,7 +25,7 @@ export function StarPicker({
               type="button"
               onClick={() => onChange(starValue)}
               onMouseEnter={() => setHovered(starValue)}
-              className="flex h-11 w-9 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-cardinal"
+              className="flex h-11 w-11 items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-cardinal"
               aria-label={`${starValue} star${starValue > 1 ? 's' : ''} for ${label}`}
               aria-pressed={value >= starValue}
             >

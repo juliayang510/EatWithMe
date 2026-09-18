@@ -3,7 +3,10 @@ import { NavLinks } from './NavLinks'
 
 export function AppShell() {
   return (
-    <div className="mx-auto flex min-h-svh max-w-6xl md:pl-56">
+    // The sidebar is fixed to the real viewport edge, so it must live outside
+    // any mx-auto/max-w wrapper — centering that pair as a unit (rather than
+    // just the content) leaves a stray gap between them on wide viewports.
+    <div className="flex min-h-svh md:pl-56">
       <aside
         className="fixed inset-y-0 left-0 hidden w-56 flex-col gap-1 border-r border-gray-30 bg-white px-3 py-6 md:flex"
         aria-label="Primary"
@@ -20,7 +23,9 @@ export function AppShell() {
         </header>
 
         <main className="flex-1 px-4 pb-24 pt-4 md:pb-8">
-          <Outlet />
+          <div className="mx-auto max-w-5xl">
+            <Outlet />
+          </div>
         </main>
 
         <nav

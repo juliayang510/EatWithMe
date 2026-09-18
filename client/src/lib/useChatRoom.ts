@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { socket } from './socket'
 import type { ChatMessage } from '../types'
 
+export type ChatStatus = 'connecting' | 'connected' | 'reconnecting' | 'error'
+
 export function useChatRoom(roomId: string | undefined) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
-  const [connected, setConnected] = useState(socket.connected)
+  const [status, setStatus] = useState<ChatStatus>(socket.connected ? 'connected' : 'connecting')
+  const hasConnectedOnce = useRef(socket.connected)
 
   useEffect(() => {
     if (!roomId) return
@@ -18,15 +21,20 @@ export function useChatRoom(roomId: string | undefined) {
       setMessages((prev) => [...prev, message])
     }
     function handleConnect() {
-      setConnected(true)
+      hasConnectedOnce.current = true
+      setStatus('connected')
       socket.emit('join-room', roomId)
     }
     function handleDisconnect() {
-      setConnected(false)
+      setStatus('reconnecting')
+    }
+    function handleConnectError() {
+      setStatus(hasConnectedOnce.current ? 'reconnecting' : 'error')
     }
 
     socket.on('connect', handleConnect)
     socket.on('disconnect', handleDisconnect)
+    socket.on('connect_error', handleConnectError)
     socket.on('history', handleHistory)
     socket.on('message', handleMessage)
 
@@ -36,6 +44,7 @@ export function useChatRoom(roomId: string | undefined) {
       socket.emit('leave-room', roomId)
       socket.off('connect', handleConnect)
       socket.off('disconnect', handleDisconnect)
+      socket.off('connect_error', handleConnectError)
       socket.off('history', handleHistory)
       socket.off('message', handleMessage)
     }
@@ -46,5 +55,5 @@ export function useChatRoom(roomId: string | undefined) {
     socket.emit('send-message', { roomId, senderId, senderName, text: text.trim() })
   }
 
-  return { messages, connected, sendMessage }
+  return { messages, status, sendMessage }
 }

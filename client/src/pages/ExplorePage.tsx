@@ -11,9 +11,13 @@ const USC_CENTER: [number, number] = [34.0224, -118.2851]
 const ALL_CUISINES = Array.from(new Set(restaurants.map((r) => r.cuisine))) as Cuisine[]
 const ALL_COSTS: CostTier[] = ['$', '$$', '$$$']
 
+const prefersReducedMotion =
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 function FlyTo({ position }: { position: [number, number] | null }) {
   const map = useMap()
-  if (position) map.flyTo(position, 16, { duration: 0.6 })
+  if (position) map.flyTo(position, 16, { duration: prefersReducedMotion ? 0 : 0.6 })
   return null
 }
 
@@ -75,7 +79,17 @@ export function ExplorePage() {
               key={r.id}
               position={[r.location.lat, r.location.lng]}
               icon={restaurantPinIcon(!!r.sponsored, r.id === selectedId)}
-              eventHandlers={{ click: () => setSelectedId(r.id) }}
+              eventHandlers={{
+                click: () => setSelectedId(r.id),
+                add: (e) => {
+                  const el = e.target.getElement()
+                  el?.setAttribute('role', 'button')
+                  el?.setAttribute(
+                    'aria-label',
+                    `${r.name}, ${r.cuisine}, ${r.cost}, ${r.rating} star rating${r.sponsored ? ', sponsored' : ''}`,
+                  )
+                },
+              }}
             >
               <Popup>
                 <span className="font-semibold">{r.name}</span>
