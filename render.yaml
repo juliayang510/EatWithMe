@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: eat-with-me-server
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: CLIENT_ORIGIN
+        value: https://eat-with-me-five.vercel.app
